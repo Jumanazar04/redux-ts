@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export interface Category {
+export interface Product {
     name: string;
     image: string;
 }
 
 interface DataState {
-    value: Category[];
+    value: Product[];
     isLoading: boolean;
     isError: boolean;
 }
@@ -18,12 +18,12 @@ const initialState: DataState = {
     isError: false,
 };
 
-export const fetchData = createAsyncThunk<Category[]>('data/fetchData', async () => {
-    const res = await axios.get('https://ecommerce-backend-fawn-eight.vercel.app/api/categories');
+export const fetchData = createAsyncThunk<Product[]>('data/fetchData', async () => {
+    const res = await axios.get('https://ecommerce-backend-fawn-eight.vercel.app/api/products');
     return res.data;  
 });
 
-const dataSlice = createSlice({
+const productSlice = createSlice({
     name: 'data',  
     initialState,
     reducers: {},
@@ -33,7 +33,7 @@ const dataSlice = createSlice({
                 state.isLoading = true;
                 state.isError = false; 
             })
-            .addCase(fetchData.fulfilled, (state, action: PayloadAction<Category[]>) => {
+            .addCase(fetchData.fulfilled, (state, action: PayloadAction<Product[]>) => {
                 state.isLoading = false;
                 state.value = action.payload;  
             })
@@ -44,4 +44,4 @@ const dataSlice = createSlice({
     },
 });
 
-export default dataSlice.reducer;
+export default productSlice.reducer;
