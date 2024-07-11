@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../Redux Toolkit/store';
 import { addTodo, toggleTodo, deleteTodo } from '../Redux Toolkit/features/todo/TodoSlice';
-import { Input } from 'antd';
+import { Button, Input, message } from 'antd';
 
 const App: React.FC = () => {
   const [text, setText] = useState('');
@@ -10,9 +10,13 @@ const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddTodo = () => {
+    if (!text) {
+        message.error('Please enter task')
+      }
     if (text.trim()) {
       dispatch(addTodo(text));
       setText('');
+      message.success('Store added tasks')
     }
   };
 
@@ -22,10 +26,12 @@ const App: React.FC = () => {
 
   const handleDeleteTodo = (id: number) => {
     dispatch(deleteTodo(id));
+    message.success('Deleted todo')
   };
 
   return (
     <div className='container mx-auto mt-5 text-center'>
+    <div className='w-1/3 mx-auto flex flex-col gap-2'>
       <h1>ToDo List</h1>
       <Input
         type="text"
@@ -33,18 +39,21 @@ const App: React.FC = () => {
         onChange={(e) => setText(e.target.value)}
         placeholder="Add a new task..."
       />
-      <button onClick={handleAddTodo}>Add Todo</button>
+      <Button onClick={handleAddTodo}>Add Todo</Button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+        <div  className='flex gap-3 items-center justify-center' key={todo.id} >
+          <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
             {todo.text}
-            <button onClick={() => handleToggleTodo(todo.id)}>
-              {todo.completed ? 'Undo' : 'Complete'}
-            </button>
-            <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
           </li>
+            <Button onClick={() => handleToggleTodo(todo.id)}>
+            {todo.completed ? 'Undo' : 'Complete'}
+          </Button>
+          <Button className='text-red-600' onClick={() => handleDeleteTodo(todo.id)}>Delete</Button>
+        </div>
         ))}
       </ul>
+    </div>
     </div>
   );
 };
