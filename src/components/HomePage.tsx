@@ -9,18 +9,18 @@ function HomePage() {
     const dispatch = useDispatch<AppDispatch>();
     const [amount, setAmount] = useState<number>()
   return (
-    <div>
-            <div>
+    <div className=" h-screen flex justify-center items-center flex-col gap-7">
+            <div className="flex flex-col gap-4 w-56 text-center p-2 border rounded-md">
                 <Button onClick={() => dispatch(increment())}>+</Button>
-                <span>{count}</span>
+                <span className="text-2xl font-bold">{count}</span>
                 <Button onClick={() => dispatch(decrement())}>-</Button>
             </div>
-            <div>
-                <Input value={amount} onChange={(e) => setAmount(+e.target.value)} />
-                <button onClick={() => {
+            <div className="flex flex-col gap-2">
+                <Input placeholder="Enter the number..." value={amount} onChange={(e) => setAmount(+e.target.value)} />
+                <Button type="primary" onClick={() => {
                     dispatch(incrementByAmount(amount))
                     setAmount(0)
-                  }}>Add</button>
+                  }}>Add</Button>
             </div>
     </div>
   )

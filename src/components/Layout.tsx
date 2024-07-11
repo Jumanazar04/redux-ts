@@ -4,8 +4,8 @@ function Layout() {
   return (
     <div className="">
         <header>
-            <nav className=" bg-slate-300 shadow-2xl">
-                <div className=" container mx-auto text-xl font-bold flex justify-evenly">
+            <nav className=" bg-slate-300 shadow-xl">
+                <div className=" container mx-auto text-xl font-bold flex justify-evenly p-4">
                     <NavLink to={'/'}   className={({ isActive, isPending }) =>
                             isPending ? "pending" : isActive ? "text-red-600 underline" : ""
                         }
@@ -33,7 +33,7 @@ function Layout() {
                 </div>
             </nav>
         </header>
-        <main>
+        <main className="mx-auto my-5">
             <Outlet />
         </main>
         <footer>
