@@ -40,7 +40,7 @@ const App: React.FC = () => {
         placeholder="Add a new task..."
       />
       <Button onClick={handleAddTodo}>Add Todo</Button>
-      <ul>
+      <ul className='flex flex-col gap-2'>
         {todos.map((todo) => (
         <div  className='flex gap-3 items-center justify-center' key={todo.id} >
           <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
